@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,12 +28,25 @@ public class VerifyGPS extends AppCompatActivity {
     private static String TAG = VerifyGPS.class.getSimpleName();
     protected static final int REQUEST_CHECK_SETTINGS = 0x1;
 
+    private LinearLayout tryAgainGroup;
+    private Button tryAgainButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_verify_gps);
 
+        tryAgainGroup = findViewById(R.id.try_again_group);
+        tryAgainButton = findViewById(R.id.try_again_button);
+
         displayLocationSettingsRequest(this);
+
+        tryAgainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                displayLocationSettingsRequest(VerifyGPS.this);
+            }
+        });
     }
 
     @SuppressWarnings("deprecation")
@@ -92,6 +108,7 @@ public class VerifyGPS extends AppCompatActivity {
                     break;
                 case Activity.RESULT_CANCELED:
                     Log.i(TAG, "User chose not to make required location settings changes.");
+                    tryAgainGroup.setVisibility(View.VISIBLE);
                     break;
             }
         }

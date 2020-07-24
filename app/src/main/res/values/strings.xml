@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Go For A Walk</string>
     <string name="title_activity_maps">Map</string>
+    <string name="Ops">Ops!</string>
+    <string name="gps_warning">Você precisa permitir acesso à sua localização para usar o aplicativo.\nTente novamente e clique OK.</string>
+    <string name="try_again">Tente Novamente</string>
 </resources>
