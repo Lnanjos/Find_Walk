@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,7 @@ public class VerifyGPS extends AppCompatActivity {
 
     private LinearLayout tryAgainGroup;
     private Button tryAgainButton;
+    private ProgressBar progressBarVerifyGPS;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class VerifyGPS extends AppCompatActivity {
 
         tryAgainGroup = findViewById(R.id.try_again_group);
         tryAgainButton = findViewById(R.id.try_again_button);
+        progressBarVerifyGPS = findViewById(R.id.progress_bar_verify_gps);
 
         displayLocationSettingsRequest(this);
 
@@ -102,6 +105,8 @@ public class VerifyGPS extends AppCompatActivity {
             switch (resultCode) {
                 case Activity.RESULT_OK:
                     Log.i(TAG, "User agreed to make required location settings changes.");
+                    tryAgainGroup.setVisibility(View.GONE);
+                    progressBarVerifyGPS.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(this, MapsActivity.class);
                     startActivity(intent);
                     finish();
@@ -109,6 +114,7 @@ public class VerifyGPS extends AppCompatActivity {
                 case Activity.RESULT_CANCELED:
                     Log.i(TAG, "User chose not to make required location settings changes.");
                     tryAgainGroup.setVisibility(View.VISIBLE);
+                    progressBarVerifyGPS.setVisibility(View.GONE);
                     break;
             }
         }
