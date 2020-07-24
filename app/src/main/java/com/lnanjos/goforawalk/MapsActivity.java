@@ -69,12 +69,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         updateLocationUI();
 
         try {
+            //delay to wait GPS turn on
             Thread.sleep(3000);
+            // Get the current location of the device and set the position of the map.
+            getDeviceLocation();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        // Get the current location of the device and set the position of the map.
-        getDeviceLocation();
 
     }
 
