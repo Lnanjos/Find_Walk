@@ -12,23 +12,22 @@
         android:layout_height="match_parent"
         tools:context=".MapsActivity" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutDescription="@xml/activity_maps_xml_constraintlayout_scene">
 
         <Button
+            android:id="@+id/button_go"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="20dp"
             android:layout_marginBottom="80dp"
             android:background="@color/colorPrimary"
-            android:textColor="@color/colorAccent"
+            android:paddingHorizontal="20dp"
             android:text="@string/app_name"
-            android:textSize="15sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:textColor="@color/colorAccent"
+            android:textStyle="bold" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </FrameLayout>
