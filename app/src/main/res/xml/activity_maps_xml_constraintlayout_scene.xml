@@ -19,7 +19,7 @@
                     motion:customDimension="5sp" />
             </KeyAttribute>
             <KeyAttribute
-                motion:framePosition="50"
+                motion:framePosition="75"
                 motion:motionTarget="@+id/button_go">
                 <CustomAttribute
                     motion:attributeName="textSize"
