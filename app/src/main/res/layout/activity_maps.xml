@@ -30,38 +30,98 @@
 
         <androidx.cardview.widget.CardView
             android:id="@+id/cardView"
-            android:layout_width="200dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:layout_margin="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <LinearLayout
-                android:paddingVertical="8dp"
-                android:layout_gravity="center"
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:stretchColumns="0,1"
+                android:shrinkColumns="0,1">
 
-                <TextView
-                    android:layout_gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_choose_dialog"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="15sp" />
+                <TableRow>
 
-                <ImageButton
-                    android:id="@+id/button_random"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@color/cardview_light_background"
-                    android:contentDescription="@string/random_button"
-                    android:src="@drawable/ic_random" />
-            </LinearLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_span="2"
+                        android:padding="8dp">
+
+                        <TextView
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:layout_span="2"
+                            android:text="@string/title_choose_dialog"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorPrimary"
+                            android:textSize="15sp" />
+
+                        <ImageButton
+                            android:id="@+id/button_close"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            android:layout_gravity="end"
+                            android:layout_column="2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@color/cardview_light_background"
+                            android:src="@drawable/ic_close"
+                            android:contentDescription="@string/close_choose_walk" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </TableRow>
+
+                <TableRow>
+
+                    <ImageButton
+                        android:id="@+id/button_random"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:background="@color/cardview_light_background"
+                        android:contentDescription="@string/random_button"
+                        android:src="@drawable/ic_random" />
+
+                    <ImageButton
+                        android:id="@+id/button_categories"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:background="@color/cardview_light_background"
+                        android:contentDescription="@string/categories_button"
+                        android:src="@drawable/ic_switchers" />
+                </TableRow>
+
+                <TableRow android:layout_marginBottom="8dp">
+
+                    <TextView
+                        android:layout_column="0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/random_walk"
+                        android:textColor="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_column="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/filter_category"
+                        android:textColor="@color/colorPrimary" />
+                </TableRow>
+            </TableLayout>
         </androidx.cardview.widget.CardView>
 
     </androidx.constraintlayout.motion.widget.MotionLayout>
