@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ProgressBar
+        android:id="@+id/progressBar_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="false"
+        android:max="100"
+        android:minWidth="100dp"
+        android:minHeight="100dp"
+        android:progress="01"
+        android:progressDrawable="@drawable/progressbar_drawable_progress"
+        android:indeterminateDrawable="@drawable/progressbar_drawable_progress"
+        app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/progressBar_distance"
+        app:layout_constraintBottom_toBottomOf="@id/progressBar_distance"
+        app:layout_constraintStart_toStartOf="@id/progressBar_distance"
+        app:layout_constraintEnd_toEndOf="@id/progressBar_distance"
+        android:textSize="24sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
+        android:text="@string/distance" />
+
+    <SeekBar
+        android:id="@+id/seekBar_distance"
+        android:minHeight="200dp"
+        android:progressDrawable="@drawable/seekbar_drawable_progress"
+        android:thumb="@drawable/seekbar_drawable_thumb"
+        android:progress="40"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
