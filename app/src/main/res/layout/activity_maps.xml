@@ -39,144 +39,143 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <TableLayout
-                android:id="@+id/choose_walk_layout"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:shrinkColumns="0,1"
-                android:stretchColumns="0,1">
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:layout_span="2"
+                android:padding="8dp">
 
-                <TableRow>
+                <TextView
+                    android:id="@+id/walk_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_span="2"
+                    android:text="@string/title_choose_dialog"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="15sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_span="2"
-                        android:padding="8dp">
+                <ImageButton
+                    android:id="@+id/button_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_gravity="end"
+                    android:background="@color/cardview_light_background"
+                    android:contentDescription="@string/close_choose_walk"
+                    android:src="@drawable/ic_close"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TableLayout
+                    android:id="@+id/choose_walk_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:shrinkColumns="0,1"
+                    android:stretchColumns="0,1"
+                    app:layout_constraintTop_toBottomOf="@+id/walk_title">
+
+                    <TableRow>
+
+                        <ImageButton
+                            android:id="@+id/button_random"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:background="@color/cardview_light_background"
+                            android:contentDescription="@string/random_button"
+                            android:src="@drawable/ic_random" />
+
+                        <ImageButton
+                            android:id="@+id/button_categories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:background="@color/cardview_light_background"
+                            android:contentDescription="@string/categories_button"
+                            android:src="@drawable/ic_switchers" />
+                    </TableRow>
+
+                    <TableRow android:layout_marginBottom="8dp">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_column="0"
-                            android:layout_span="2"
-                            android:text="@string/title_choose_dialog"
-                            android:textAlignment="center"
-                            android:textColor="@color/colorPrimary"
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" />
+                            android:gravity="center"
+                            android:text="@string/random_walk"
+                            android:textColor="@color/colorPrimary" />
 
-                        <ImageButton
-                            android:id="@+id/button_close"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_column="2"
-                            android:layout_gravity="end"
-                            android:background="@color/cardview_light_background"
-                            android:contentDescription="@string/close_choose_walk"
-                            android:src="@drawable/ic_close"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                            android:layout_column="1"
+                            android:gravity="center"
+                            android:text="@string/filter_category"
+                            android:textColor="@color/colorPrimary" />
+                    </TableRow>
+                </TableLayout>
 
-                </TableRow>
-
-                <TableRow>
-
-                    <ImageButton
-                        android:id="@+id/button_random"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:background="@color/cardview_light_background"
-                        android:contentDescription="@string/random_button"
-                        android:src="@drawable/ic_random" />
-
-                    <ImageButton
-                        android:id="@+id/button_categories"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:background="@color/cardview_light_background"
-                        android:contentDescription="@string/categories_button"
-                        android:src="@drawable/ic_switchers" />
-                </TableRow>
-
-                <TableRow android:layout_marginBottom="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:gravity="center"
-                        android:text="@string/random_walk"
-                        android:textColor="@color/colorPrimary" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_column="1"
-                        android:gravity="center"
-                        android:text="@string/filter_category"
-                        android:textColor="@color/colorPrimary" />
-                </TableRow>
-            </TableLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/distance_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible">
-
-
-                <ProgressBar
-                    android:id="@+id/progressBar_distance"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminate="false"
-                    android:indeterminateDrawable="@drawable/progressbar_drawable_progress"
-                    android:minWidth="100dp"
-                    android:minHeight="100dp"
-                    android:max="50"
-                    android:progress="10"
-                    android:progressDrawable="@drawable/progressbar_drawable_progress"
-                    app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-
-                <TextView
-                    android:id="@+id/textView_distance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="@string/distance"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/progressBar_distance"
-                    app:layout_constraintEnd_toEndOf="@id/progressBar_distance"
-                    app:layout_constraintStart_toStartOf="@id/progressBar_distance"
-                    app:layout_constraintTop_toTopOf="@id/progressBar_distance" />
-
-                <SeekBar
-                    android:id="@+id/seekBar_distance"
-                    android:max="50"
-                    android:progress="10"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/distance_layout"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:minHeight="200dp"
-                    android:splitTrack="false"
-                    android:progressDrawable="@drawable/seekbar_drawable_progress"
-                    android:thumb="@drawable/seekbar_drawable_thumb"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/walk_title">
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_distance"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="false"
+                        android:indeterminateDrawable="@drawable/progressbar_drawable_progress"
+                        android:max="50"
+                        android:minWidth="100dp"
+                        android:minHeight="100dp"
+                        android:progress="10"
+                        android:progressDrawable="@drawable/progressbar_drawable_progress"
+                        app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
 
+                    <TextView
+                        android:id="@+id/textView_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/distance"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="24sp"
+                        app:layout_constraintBottom_toBottomOf="@id/progressBar_distance"
+                        app:layout_constraintEnd_toEndOf="@id/progressBar_distance"
+                        app:layout_constraintStart_toStartOf="@id/progressBar_distance"
+                        app:layout_constraintTop_toTopOf="@id/progressBar_distance" />
+
+                    <SeekBar
+                        android:id="@+id/seekBar_distance"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:max="50"
+                        android:minHeight="200dp"
+                        android:progress="10"
+                        android:progressDrawable="@drawable/seekbar_drawable_progress"
+                        android:splitTrack="false"
+                        android:thumb="@drawable/seekbar_drawable_thumb"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 
