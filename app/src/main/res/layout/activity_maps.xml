@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TableLayout
-                android:id="@+id/choose_walk"
+                android:id="@+id/choose_walk_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:shrinkColumns="0,1"
@@ -125,6 +125,7 @@
             </TableLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/distance_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="gone">
@@ -138,7 +139,7 @@
                     android:max="100"
                     android:minWidth="100dp"
                     android:minHeight="100dp"
-                    android:progress="01"
+                    android:progress="20"
                     android:progressDrawable="@drawable/progressbar_drawable_progress"
                     app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -160,10 +161,11 @@
 
                 <SeekBar
                     android:id="@+id/seekBar_distance"
+                    android:progress="10"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:minHeight="200dp"
-                    android:progress="40"
+                    android:splitTrack="false"
                     android:progressDrawable="@drawable/seekbar_drawable_progress"
                     android:thumb="@drawable/seekbar_drawable_thumb"
                     app:layout_constraintBottom_toBottomOf="parent"

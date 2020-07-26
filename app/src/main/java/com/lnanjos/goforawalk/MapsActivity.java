@@ -4,9 +4,12 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TableLayout;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -40,7 +43,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Location mLastKnownLocation;
     private static final String TAG = MapsActivity.class.getSimpleName();
 
-    private Button buttonGo;
+    private ImageButton buttonRandom;
+    private TableLayout chooseWalkLayout;
+    private ConstraintLayout distanceLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +55,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
 
-        buttonGo = findViewById(R.id.button_go);
+        buttonRandom = findViewById(R.id.button_random);
+        chooseWalkLayout = findViewById(R.id.choose_walk_layout);
+        distanceLayout = findViewById(R.id.distance_layout);
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
@@ -61,6 +68,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
+
+        buttonRandom.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseWalkLayout.setVisibility(View.GONE);
+                distanceLayout.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
