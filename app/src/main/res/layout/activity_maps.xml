@@ -128,22 +128,25 @@
                 android:id="@+id/distance_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:visibility="gone">
+                android:visibility="visible">
+
 
                 <ProgressBar
                     android:id="@+id/progressBar_distance"
+                    style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:indeterminate="false"
                     android:indeterminateDrawable="@drawable/progressbar_drawable_progress"
-                    android:max="100"
                     android:minWidth="100dp"
                     android:minHeight="100dp"
-                    android:progress="20"
+                    android:max="50"
+                    android:progress="10"
                     android:progressDrawable="@drawable/progressbar_drawable_progress"
                     app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
+
 
                 <TextView
                     android:id="@+id/textView_distance"
@@ -161,6 +164,7 @@
 
                 <SeekBar
                     android:id="@+id/seekBar_distance"
+                    android:max="50"
                     android:progress="10"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

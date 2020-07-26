@@ -11,4 +11,5 @@
     <string name="filter_category">Category</string>
     <string name="close_choose_walk">Close choose walk</string>
     <string name="distance">10 \n km</string>
+    <string name="km">\nkm</string>
 </resources>

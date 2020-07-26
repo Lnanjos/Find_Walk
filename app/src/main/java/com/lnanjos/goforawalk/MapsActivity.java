@@ -1,12 +1,16 @@
 package com.lnanjos.goforawalk;
 
+import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
+import android.widget.SeekBar;
 import android.widget.TableLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -46,6 +50,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageButton buttonRandom;
     private TableLayout chooseWalkLayout;
     private ConstraintLayout distanceLayout;
+    private SeekBar seekBarDistance;
+    private ProgressBar progressBarDistance;
+    private TextView textViewDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buttonRandom = findViewById(R.id.button_random);
         chooseWalkLayout = findViewById(R.id.choose_walk_layout);
         distanceLayout = findViewById(R.id.distance_layout);
+        seekBarDistance = findViewById(R.id.seekBar_distance);
+        progressBarDistance = findViewById(R.id.progressBar_distance);
+        textViewDistance = findViewById(R.id.textView_distance);
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
@@ -74,6 +84,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 chooseWalkLayout.setVisibility(View.GONE);
                 distanceLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        seekBarDistance.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                progressBarDistance.setProgress(progress);
+                textViewDistance.setText(progress + getString(R.string.km));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
             }
         });
     }
