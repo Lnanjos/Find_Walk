@@ -47,7 +47,7 @@
         motion:duration="1000">
         <OnClick
             motion:clickAction="transitionToStart"
-            motion:targetId="@+id/button_close" />
+            motion:targetId="@id/button_close" />
         <KeyFrameSet>
             <KeyAttribute
                 motion:framePosition="0"

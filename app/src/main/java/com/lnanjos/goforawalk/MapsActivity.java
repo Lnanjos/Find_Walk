@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -48,12 +49,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = MapsActivity.class.getSimpleName();
 
     private ImageButton buttonRandom;
+    private ImageButton buttonClose;
     private TableLayout chooseWalkLayout;
     private ConstraintLayout distanceLayout;
     private SeekBar seekBarDistance;
     private ProgressBar progressBarDistance;
     private TextView textViewDistance;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +71,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         seekBarDistance = findViewById(R.id.seekBar_distance);
         progressBarDistance = findViewById(R.id.progressBar_distance);
         textViewDistance = findViewById(R.id.textView_distance);
+        buttonClose = findViewById(R.id.button_close);
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
@@ -84,6 +88,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View v) {
                 chooseWalkLayout.setVisibility(View.GONE);
                 distanceLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        buttonClose.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    chooseWalkLayout.setVisibility(View.VISIBLE);
+                    distanceLayout.setVisibility(View.GONE);
+                }
+                return false;
             }
         });
 
