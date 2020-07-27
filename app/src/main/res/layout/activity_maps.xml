@@ -136,7 +136,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:indeterminate="false"
-                        android:indeterminateDrawable="@drawable/progressbar_drawable_progress"
                         android:max="50"
                         android:minWidth="100dp"
                         android:minHeight="100dp"
@@ -146,6 +145,18 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />
 
+                    <ProgressBar
+                        android:id="@+id/progressBar_distance_indeterminate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminate="true"
+                        android:indeterminateTint="@color/colorPrimary"
+                        android:minWidth="100dp"
+                        android:minHeight="100dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toTopOf="@id/seekBar_distance"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
                         android:id="@+id/textView_distance"

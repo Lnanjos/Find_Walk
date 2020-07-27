@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
@@ -54,7 +55,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ConstraintLayout distanceLayout;
     private SeekBar seekBarDistance;
     private ProgressBar progressBarDistance;
+    private ProgressBar progressBarDistanceIndeterminate;
     private TextView textViewDistance;
+    private Button buttonStart;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -70,8 +73,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         distanceLayout = findViewById(R.id.distance_layout);
         seekBarDistance = findViewById(R.id.seekBar_distance);
         progressBarDistance = findViewById(R.id.progressBar_distance);
+        progressBarDistanceIndeterminate = findViewById(R.id.progressBar_distance_indeterminate);
         textViewDistance = findViewById(R.id.textView_distance);
         buttonClose = findViewById(R.id.button_close);
+        buttonStart = findViewById(R.id.button_start);
 
         // Construct a PlacesClient
         Places.initialize(getApplicationContext(), getString(R.string.google_maps_key));
@@ -97,6 +102,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     chooseWalkLayout.setVisibility(View.VISIBLE);
                     distanceLayout.setVisibility(View.GONE);
+                    progressBarDistance.setVisibility(View.VISIBLE);
+                    progressBarDistanceIndeterminate.setVisibility(View.INVISIBLE);
+                    seekBarDistance.setAlpha(1f);
+                    seekBarDistance.setEnabled(true);
                 }
                 return false;
             }
@@ -118,6 +127,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
 
+            }
+        });
+
+        buttonStart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                seekBarDistance.setAlpha(0.5f);
+                seekBarDistance.setEnabled(false);
+                progressBarDistance.setVisibility(View.INVISIBLE);
+                progressBarDistanceIndeterminate.setVisibility(View.VISIBLE);
             }
         });
     }
