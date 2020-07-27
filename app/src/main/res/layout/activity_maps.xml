@@ -171,6 +171,17 @@
                         android:progressDrawable="@drawable/seekbar_drawable_progress"
                         android:splitTrack="false"
                         android:thumb="@drawable/seekbar_drawable_thumb"
+                        app:layout_constraintBottom_toTopOf="@+id/button_start"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <Button
+                        android:id="@+id/button_start"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:text="@string/start"
+                        android:textColor="@color/colorAccent"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent" />

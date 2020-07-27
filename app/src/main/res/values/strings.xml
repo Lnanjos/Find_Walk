@@ -12,4 +12,5 @@
     <string name="close_choose_walk">Close choose walk</string>
     <string name="distance">10 \n km</string>
     <string name="km">\nkm</string>
+    <string name="start">START!</string>
 </resources>
