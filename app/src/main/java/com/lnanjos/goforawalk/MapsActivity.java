@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TableLayout;
@@ -60,14 +61,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final String TAG = MapsActivity.class.getSimpleName();
 
     private ImageButton buttonRandom;
+    private ImageButton buttonCategories;
     private ImageButton buttonClose;
     private TableLayout chooseWalkLayout;
     private ConstraintLayout distanceLayout;
+    private LinearLayout categoriesLayout;
     private SeekBar seekBarDistance;
     private ProgressBar progressBarDistance;
     private ProgressBar progressBarDistanceIndeterminate;
     private TextView textViewDistance;
     private Button buttonStart;
+    private Button buttonNext;
+
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -87,7 +92,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         textViewDistance = findViewById(R.id.textView_distance);
         buttonClose = findViewById(R.id.button_close);
         buttonStart = findViewById(R.id.button_start);
-
+        buttonNext = findViewById(R.id.button_next);
+        buttonCategories = findViewById(R.id.button_categories);
+        categoriesLayout = findViewById(R.id.categories_layout);
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -103,12 +110,21 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        buttonCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chooseWalkLayout.setVisibility(View.GONE);
+                categoriesLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
         buttonClose.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
                     chooseWalkLayout.setVisibility(View.VISIBLE);
                     distanceLayout.setVisibility(View.GONE);
+                    categoriesLayout.setVisibility(View.GONE);
                     progressBarDistance.setVisibility(View.VISIBLE);
                     progressBarDistanceIndeterminate.setVisibility(View.INVISIBLE);
                     seekBarDistance.setAlpha(1f);
@@ -152,6 +168,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        buttonNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                categoriesLayout.setVisibility(View.GONE);
+                distanceLayout.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
@@ -186,7 +209,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.addMarker(new MarkerOptions()
                             .title(result.getName())
                             .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                 } else {
                     Log.i("Falhou", response.message());
                 }
@@ -228,6 +251,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        mMap.getUiSettings().setMapToolbarEnabled(false);
 
         // Prompt the user for permission.
         getLocationPermission();

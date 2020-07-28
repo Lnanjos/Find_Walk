@@ -13,4 +13,13 @@
     <string name="distance">10 \n km</string>
     <string name="km">\nkm</string>
     <string name="start">START!</string>
+    <string name="next">next</string>
+    <string name="store">Store</string>
+    <string name="cafe">Cafe</string>
+    <string name="bar">Bar</string>
+    <string name="supermarket">Supermarket</string>
+    <string name="local_government_office">Local Government Office</string>
+    <string name="park">Park</string>
+    <string name="restaurant">Restaurant</string>
+    <string name="drugstore">Drugstore</string>
 </resources>

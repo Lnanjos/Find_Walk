@@ -12,4 +12,10 @@ public interface PlacesServices {
     Call<NearbyPlaces> listRandomPlaces(@Query("location") String location,
                                         @Query("radius") int radius,
                                         @Query("key") String key);
+
+    @GET("/maps/api/place/nearbysearch/json")
+    Call<NearbyPlaces> listRandomPlaces(@Query("location") String location,
+                                        @Query("radius") int radius,
+                                        @Query("key") String key,
+                                        @Query("type") String type);
 }
