@@ -36,6 +36,7 @@ import com.lnanjos.models.NearbyPlaces;
 import com.lnanjos.models.Result;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -174,15 +175,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(@NonNull Call<NearbyPlaces> call, @NonNull Response<NearbyPlaces> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    for (Result result : response.body().getResults()) {
-                        Log.v("Name", result.getName());
-                        if (!verifyTypePolitical(result.getTypes())) {
-                            mMap.addMarker(new MarkerOptions()
-                                    .title(result.getName())
-                                    .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
-                        }
-                    }
+
+                    Result result = drawPlace(response.body().getResults());
+                    assert result != null;
+                    CameraPosition cameraPosition = new CameraPosition.Builder()
+                            .target(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                            .zoom(DEFAULT_ZOOM)
+                            .build();
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
+                    mMap.addMarker(new MarkerOptions()
+                            .title(result.getName())
+                            .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA)));
                 } else {
                     Log.i("Falhou", response.message());
                 }
@@ -205,6 +209,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
         return false;
+    }
+
+    private Result drawPlace(List<Result> results) {
+
+        if (!results.isEmpty()) {
+            int drawNumber = ThreadLocalRandom.current().nextInt(results.size());
+            if (!verifyTypePolitical(results.get(drawNumber).getTypes())) {
+                return results.get(drawNumber);
+            } else {
+                results.remove(drawNumber);
+                return drawPlace(results);
+            }
+        }
+        return null;
     }
 
     @Override
