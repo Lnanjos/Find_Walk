@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Go For A Walk</string>
+    <string name="app_name">Find Walk</string>
     <string name="title_choose_dialog">Choose a walk!</string>
     <string name="title_activity_maps">Map</string>
     <string name="Ops">Ops!</string>
