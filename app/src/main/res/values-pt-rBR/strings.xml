@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_choose_dialog">Escolha um Passeio!</string>
+    <string name="Ops">Ops!</string>
+    <string name="gps_warning">Você precisa permitir o acesso a localização de seu dispositivo para usar o app.\\n Tente Novamente e aperte OK.</string>
+    <string name="try_again">Tente Novamente</string>
+    <string name="random_button">Botão aleatório</string>
+    <string name="categories_button">Botão categorias</string>
+    <string name="random_walk">Aleatório</string>
+    <string name="filter_category">Categoria</string>
+    <string name="close_choose_walk">Fechar escolha um passeio</string>
+    <string name="start">INICIAR!</string>
+    <string name="next">Próximo</string>
+    <string name="store">Lojas</string>
+    <string name="cafe">Cafés</string>
+    <string name="bar">Bares</string>
+    <string name="supermarket">Supermercados</string>
+    <string name="local_government_office">Governo local</string>
+    <string name="park">Parques</string>
+    <string name="restaurant">Restaurantes</string>
+    <string name="drugstore">Farmácias</string>
+    <string name="find_walk">Procurar Passeio</string>
+    <string name="fail">Falha na conexão</string>
+</resources>
