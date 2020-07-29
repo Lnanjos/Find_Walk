@@ -12,7 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
-/app/src/debug
-/app/src/release
-/app/src/androidTest
-/app/src/test
+/app/src/debug/res/values/google_maps_api.xml
+/app/src/release/res/values/google_maps_api.xml
+/app/src/androidTest/java/com/lnanjos/goforawalk/ExampleInstrumentedTest.java
+/app/src/test/java/com/lnanjos/goforawalk/ExampleUnitTest.java
