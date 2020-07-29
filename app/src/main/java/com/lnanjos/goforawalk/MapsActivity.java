@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -127,13 +126,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        buttonClose.setOnTouchListener(new View.OnTouchListener() {
+        buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP) {
-                    closeChooseMenu();
-                }
-                return false;
+            public void onClick(View v) {
+                closeChooseMenu();
+                motionLayout.transitionToStart();
             }
         });
 
