@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ import com.google.android.gms.tasks.Task;
 import com.lnanjos.models.NearbyPlaces;
 import com.lnanjos.models.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -72,6 +74,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private TextView textViewDistance;
     private Button buttonStart;
     private Button buttonNext;
+    private List<Switch> switchCategories = new ArrayList<>();
+    private List<String> selectedCategories = new ArrayList<>();
+    private NearbyPlaces nearbyPlaces;
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -95,6 +100,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buttonNext = findViewById(R.id.button_next);
         buttonCategories = findViewById(R.id.button_categories);
         categoriesLayout = findViewById(R.id.categories_layout);
+        startSwitches();
 
         // Construct a FusedLocationProviderClient.
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
@@ -122,6 +128,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
+                    selectedCategories = new ArrayList<>();
                     chooseWalkLayout.setVisibility(View.VISIBLE);
                     distanceLayout.setVisibility(View.GONE);
                     categoriesLayout.setVisibility(View.GONE);
@@ -171,6 +178,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                verifySwitchesChecked();
                 categoriesLayout.setVisibility(View.GONE);
                 distanceLayout.setVisibility(View.VISIBLE);
             }
@@ -178,11 +186,49 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void startSwitches() {
+        Switch aSwitch;
+        aSwitch = findViewById(R.id.switch_bar);
+        aSwitch.setTag(R.id.switch_bar, Result.TYPE_BAR);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_cafe);
+        aSwitch.setTag(R.id.switch_cafe, Result.TYPE_CAFE);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_drugstore);
+        aSwitch.setTag(R.id.switch_drugstore, Result.TYPE_DRUGSTORE);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_local_government_office);
+        aSwitch.setTag(R.id.switch_local_government_office, Result.TYPE_LOCAL_GOVERNMENT_OFFICE);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_park);
+        aSwitch.setTag(R.id.switch_park, Result.TYPE_PARK);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_restaurant);
+        aSwitch.setTag(R.id.switch_restaurant, Result.TYPE_RESTAURANT);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_store);
+        aSwitch.setTag(R.id.switch_store, Result.TYPE_STORE);
+        switchCategories.add(aSwitch);
+        aSwitch = findViewById(R.id.switch_supermarket);
+        aSwitch.setTag(R.id.switch_supermarket, Result.TYPE_SUPERMARKET);
+        switchCategories.add(aSwitch);
+    }
+
+    private void verifySwitchesChecked() {
+        selectedCategories = new ArrayList<>();
+        for (Switch aSwitch : switchCategories) {
+            if (aSwitch.isChecked()) {
+                selectedCategories.add(aSwitch.getTag(aSwitch.getId()).toString());
+            }
+        }
+    }
+
     private void searchPlaces(Location location, int distance) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://maps.googleapis.com")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        mMap.clear();
 
         placesServices = retrofit.create(PlacesServices.class);
 
@@ -190,37 +236,88 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             distance = 1;
         }
 
-        Call<NearbyPlaces> listCall = placesServices.listRandomPlaces(location.getLatitude() + "," + location.getLongitude(),
-                distance * 1000,
-                getString(R.string.google_maps_key));
+        if (selectedCategories.isEmpty()) {
+            Call<NearbyPlaces> listCall = placesServices.listRandomPlaces(location.getLatitude() + "," + location.getLongitude(),
+                    distance * 1000,
+                    getString(R.string.google_maps_key));
 
-        listCall.enqueue(new Callback<NearbyPlaces>() {
-            @Override
-            public void onResponse(@NonNull Call<NearbyPlaces> call, @NonNull Response<NearbyPlaces> response) {
-                if (response.isSuccessful() && response.body() != null) {
+            listCall.enqueue(new Callback<NearbyPlaces>() {
+                @Override
+                public void onResponse(@NonNull Call<NearbyPlaces> call, @NonNull Response<NearbyPlaces> response) {
+                    if (response.isSuccessful() && response.body() != null) {
 
-                    Result result = drawPlace(response.body().getResults());
-                    assert result != null;
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
-                            .zoom(DEFAULT_ZOOM)
-                            .build();
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
-                    mMap.addMarker(new MarkerOptions()
-                            .title(result.getName())
-                            .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
-                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
-                } else {
-                    Log.i("Falhou", response.message());
+                        Result result = drawPlace(response.body().getResults());
+                        assert result != null;
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                                .zoom(DEFAULT_ZOOM)
+                                .build();
+                        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
+                        mMap.addMarker(new MarkerOptions()
+                                .title(result.getName())
+                                .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                    } else {
+                        Log.i("Falhou", response.message());
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
-                t.printStackTrace();
-                Log.i("FALHOU", "FALHOU");
+                @Override
+                public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
+                    t.printStackTrace();
+                    Log.i("FALHOU", "FALHOU");
+                }
+            });
+        } else {
+            int counter = 0;
+
+            for (final String category : selectedCategories) {
+                counter++;
+                Call<NearbyPlaces> listCall = placesServices.listRandomPlaces(location.getLatitude() + "," + location.getLongitude(),
+                        distance * 1000,
+                        getString(R.string.google_maps_key),
+                        category);
+
+                final int finalCounter = counter;
+                listCall.enqueue(new Callback<NearbyPlaces>() {
+                    @Override
+                    public void onResponse(@NonNull Call<NearbyPlaces> call, @NonNull Response<NearbyPlaces> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (nearbyPlaces == null) {
+                                nearbyPlaces = response.body();
+                            } else {
+                                nearbyPlaces.getResults().addAll(response.body().getResults());
+                            }
+                            if (finalCounter == selectedCategories.size()) {
+                                for (Result result : nearbyPlaces.getResults()) {
+                                    Log.v("SelectedPlaces", result.getName());
+                                }
+                                Result result = drawPlace(nearbyPlaces.getResults());
+                                assert result != null;
+                                CameraPosition cameraPosition = new CameraPosition.Builder()
+                                        .target(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                                        .zoom(DEFAULT_ZOOM)
+                                        .build();
+                                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
+                                mMap.addMarker(new MarkerOptions()
+                                        .title(result.getName())
+                                        .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
+                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                                nearbyPlaces = null;
+                            }
+                        } else {
+                            Log.i("Falhou", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
+                        t.printStackTrace();
+                        Log.i("FALHOU", "FALHOU");
+                    }
+                });
             }
-        });
+        }
     }
 
     private boolean verifyTypePolitical(List<String> types) {

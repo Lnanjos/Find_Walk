@@ -8,6 +8,16 @@ import java.util.List;
 
 public class Result {
 
+    public static final String TYPE_STORE = "store";
+    public static final String TYPE_CAFE = "cafe";
+    public static final String TYPE_BAR = "bar";
+    public static final String TYPE_SUPERMARKET = "supermarket";
+    public static final String TYPE_LOCAL_GOVERNMENT_OFFICE = "local_government_office";
+    public static final String TYPE_PARK = "park";
+    public static final String TYPE_RESTAURANT = "restaurant";
+    public static final String TYPE_DRUGSTORE = "drugstore";
+    public static final String[] TYPES = {TYPE_BAR, TYPE_CAFE, TYPE_DRUGSTORE, TYPE_LOCAL_GOVERNMENT_OFFICE, TYPE_PARK, TYPE_RESTAURANT, TYPE_STORE, TYPE_SUPERMARKET};
+
     @SerializedName("geometry")
     @Expose
     private Geometry geometry;
