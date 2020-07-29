@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">Find Walk</string>
+    <string name="app_name" translatable="false">Find Walk</string>
     <string name="title_choose_dialog">Choose a walk!</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="Ops">Ops!</string>
+    <string name="title_activity_maps" translatable="false">Map</string>
+    <string name="Ops">Oops!</string>
     <string name="gps_warning">You need to allow access to your location to use the app.\N Try again and click OK.</string>
     <string name="try_again">Try again</string>
     <string name="random_button">Random Button</string>
@@ -10,8 +10,8 @@
     <string name="random_walk">Random</string>
     <string name="filter_category">Category</string>
     <string name="close_choose_walk">Close choose walk</string>
-    <string name="distance">10 \n km</string>
-    <string name="km">\nkm</string>
+    <string name="distance" translatable="false">10 \n km</string>
+    <string name="km" translatable="false">\nkm</string>
     <string name="start">START!</string>
     <string name="next">next</string>
     <string name="store">Store</string>
