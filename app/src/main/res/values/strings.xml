@@ -23,4 +23,5 @@
     <string name="restaurant">Restaurant</string>
     <string name="drugstore">Drugstore</string>
     <string name="find_walk">Find Walk</string>
+    <string name="fail">Connection fail</string>
 </resources>

@@ -14,6 +14,7 @@ import android.widget.SeekBar;
 import android.widget.Switch;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.motion.widget.MotionLayout;
@@ -272,6 +273,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
                     t.printStackTrace();
                     Log.i("FALHOU", "FALHOU");
+                    closeChooseMenu();
+                    showFailToast();
                 }
             });
         } else {
@@ -318,10 +321,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
                         t.printStackTrace();
                         Log.i("FALHOU", "FALHOU");
+                        closeChooseMenu();
+                        showFailToast();
                     }
                 });
             }
         }
+    }
+
+    private void showFailToast() {
+        Toast toast = Toast.makeText(MapsActivity.this, R.string.fail, Toast.LENGTH_LONG);
+        View toastView = toast.getView();
+        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+        toastMessage.setTextSize(15);
+        toastMessage.setPadding(0, 0, 0, 0);
+        toastMessage.setTextColor(getColor(R.color.colorAccent));
+        toastView.setBackgroundColor(getColor(R.color.colorPrimary));
+        toast.show();
     }
 
     private boolean verifyTypePolitical(List<String> types) {

@@ -20,4 +20,5 @@
     <string name="restaurant">Restaurantes</string>
     <string name="drugstore">Farmácias</string>
     <string name="find_walk">Procurar Passeio</string>
+    <string name="fail">Falha na conexão</string>
 </resources>
