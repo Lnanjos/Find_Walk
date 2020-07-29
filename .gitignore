@@ -12,3 +12,7 @@
 /captures
 .externalNativeBuild
 .cxx
+/app/src/debug
+/app/src/release
+/app/src/androidTest
+/app/src/test
