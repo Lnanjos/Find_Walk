@@ -17,6 +17,7 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -67,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ImageButton buttonClose;
     private TableLayout chooseWalkLayout;
     private ConstraintLayout distanceLayout;
+    private MotionLayout motionLayout;
     private LinearLayout categoriesLayout;
     private SeekBar seekBarDistance;
     private ProgressBar progressBarDistance;
@@ -100,6 +102,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         buttonNext = findViewById(R.id.button_next);
         buttonCategories = findViewById(R.id.button_categories);
         categoriesLayout = findViewById(R.id.categories_layout);
+        motionLayout = findViewById(R.id.motionLayout);
         startSwitches();
 
         // Construct a FusedLocationProviderClient.
@@ -128,14 +131,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_UP) {
-                    selectedCategories = new ArrayList<>();
-                    chooseWalkLayout.setVisibility(View.VISIBLE);
-                    distanceLayout.setVisibility(View.GONE);
-                    categoriesLayout.setVisibility(View.GONE);
-                    progressBarDistance.setVisibility(View.VISIBLE);
-                    progressBarDistanceIndeterminate.setVisibility(View.INVISIBLE);
-                    seekBarDistance.setAlpha(1f);
-                    seekBarDistance.setEnabled(true);
+                    closeChooseMenu();
                 }
                 return false;
             }
@@ -184,6 +180,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+    }
+
+    private void closeChooseMenu() {
+        selectedCategories = new ArrayList<>();
+        chooseWalkLayout.setVisibility(View.VISIBLE);
+        distanceLayout.setVisibility(View.GONE);
+        categoriesLayout.setVisibility(View.GONE);
+        progressBarDistance.setVisibility(View.VISIBLE);
+        progressBarDistanceIndeterminate.setVisibility(View.INVISIBLE);
+        seekBarDistance.setAlpha(1f);
+        seekBarDistance.setEnabled(true);
+        motionLayout.transitionToStart();
     }
 
     private void startSwitches() {
@@ -257,6 +265,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .title(result.getName())
                                 .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
+                        closeChooseMenu();
                     } else {
                         Log.i("Falhou", response.message());
                     }
@@ -289,9 +298,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 nearbyPlaces.getResults().addAll(response.body().getResults());
                             }
                             if (finalCounter == selectedCategories.size()) {
-                                for (Result result : nearbyPlaces.getResults()) {
-                                    Log.v("SelectedPlaces", result.getName());
-                                }
                                 Result result = drawPlace(nearbyPlaces.getResults());
                                 assert result != null;
                                 CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -304,6 +310,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
                                         .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                                 nearbyPlaces = null;
+                                closeChooseMenu();
                             }
                         } else {
                             Log.i("Falhou", response.message());
@@ -349,7 +356,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.getUiSettings().setMapToolbarEnabled(false);
+        //mMap.getUiSettings().setMapToolbarEnabled(false);
 
         // Prompt the user for permission.
         getLocationPermission();
