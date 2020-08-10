@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,11 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.motion.widget.MotionLayout;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -48,7 +47,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+import static com.lnanjos.goforawalk.R.string.google_maps_key;
+
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -245,12 +246,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (selectedCategories.isEmpty()) {
             Call<NearbyPlaces> listCall = placesServices.listRandomPlaces(location.getLatitude() + "," + location.getLongitude(),
                     distance * 1000,
-                    getString(R.string.google_maps_key));
+                    getString(google_maps_key));
 
             listCall.enqueue(new Callback<NearbyPlaces>() {
                 @Override
                 public void onResponse(@NonNull Call<NearbyPlaces> call, @NonNull Response<NearbyPlaces> response) {
-                    if (response.isSuccessful() && response.body() != null) {
+                    assert response.body() != null;
+                    if (response.isSuccessful() && response.body().getResults() != null) {
 
                         Result result = drawPlace(response.body().getResults());
                         assert result != null;
@@ -264,15 +266,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .position(new LatLng(result.getGeometry().getLocation().getLat(), result.getGeometry().getLocation().getLng()))
                                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_VIOLET)));
                         closeChooseMenu();
-                    } else {
-                        Log.i("Falhou", response.message());
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
                     t.printStackTrace();
-                    Log.i("FALHOU", "FALHOU");
                     closeChooseMenu();
                     showFailToast();
                 }
@@ -284,7 +283,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 counter++;
                 Call<NearbyPlaces> listCall = placesServices.listRandomPlaces(location.getLatitude() + "," + location.getLongitude(),
                         distance * 1000,
-                        getString(R.string.google_maps_key),
+                        getString(google_maps_key),
                         category);
 
                 final int finalCounter = counter;
@@ -312,15 +311,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 nearbyPlaces = null;
                                 closeChooseMenu();
                             }
-                        } else {
-                            Log.i("Falhou", response.message());
                         }
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<NearbyPlaces> call, @NonNull Throwable t) {
-                        t.printStackTrace();
-                        Log.i("FALHOU", "FALHOU");
                         closeChooseMenu();
                         showFailToast();
                     }
@@ -332,7 +327,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void showFailToast() {
         Toast toast = Toast.makeText(MapsActivity.this, R.string.fail, Toast.LENGTH_LONG);
         View toastView = toast.getView();
-        TextView toastMessage = (TextView) toastView.findViewById(android.R.id.message);
+        TextView toastMessage = toastView.findViewById(android.R.id.message);
         toastMessage.setTextSize(15);
         toastMessage.setPadding(0, 0, 0, 0);
         toastMessage.setTextColor(getColor(R.color.colorAccent));
@@ -434,7 +429,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getLocationPermission();
             }
         } catch (SecurityException e) {
-            Log.e("Exception: %s", "" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -450,7 +445,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onComplete(@NonNull Task<Location> task) {
                         if (task.isSuccessful()) {
-                            Log.d(TAG, "Founded location");
                             // Set the map's camera position to the current location of the device.
                             mLastKnownLocation = task.getResult();
                             if (mLastKnownLocation != null) {
@@ -461,15 +455,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 3000, null);
                             }
                         } else {
-                            Log.d(TAG, "Current location is null. Using defaults.");
-                            Log.e(TAG, "Exception: %s", task.getException());
                             getDeviceLocation();
                         }
                     }
                 });
             }
         } catch (SecurityException e) {
-            Log.e("Exception: %s", "" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
